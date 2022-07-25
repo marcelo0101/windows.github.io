@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows RÁPIDO e SEGURO</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <h1>Windows RÁPIDO e SEGURO</h1>
+
+<p>
+    <ul>
+
+        <li>Não desabilitar win update</li>
+        <li>Não ativar windows sem chave original (Pirata)</li>
+        <li> Não usar windows Frankenstein (windows modificado)</li>
+
+    </ul>    
+   
+
+</p>
+
+
+<h2> 1 - Análise do Disco Rigido / SSD </h2>
+  <p>
+
+    Primeiro passo para deixar windows rápido e seguro.
+   
+    Problemas no  <strong>disco rigido</strong>  é uma das principais causas de lentidão no sistema operacional.
+
+    Podemos usar para isso a ferramenta
+
+    Data Lifeguard Diagnostic for Windows: <br>
+    
+    <a href="https://www.windowsrapidoeseguro.com.br/1">Data Lifeguard Diagnostic for Windows</a>
+
+
+    Fazer o: <b>EXTENDED TEST NÃO INTERROMPA ESTA ANÁLISE</b>  <br>
+    Se não passar o disco tem que ser trocado o windows sempre vai ficar lento e ter problemas.
+    Fazer este teste em todos os disco por que não é incomum o windows ficar lento por problema em outro disco tbm.
+
+
+
+
+
+
+
+    
+  </p>
+
+  
+    
+    
+
+          
+    <h2> 2 - CHKDSK  TODOS OS COMANDO EXECUTAR COMO ADMINISTRADOR</h2>
+        <strong>chkdsk /r</strong>
+
+    <p> O chkdsk /r analisa todo disco rígido - inclusive os setores vazios, 
+        algo que o chkdsk normal (via Windows) não faz. Além disso, o chkdsk /r 
+        só pode ser realizado no drive C: com o Windows offline.</p>
+
+
+    <p> Existem dois tipos de bad block: o físico e o lógico o bad block físico não tem solução pois ele está 
+        fisicamente danificado, mas <strong>o bad block lógico é um erro temporário </strong> que ocorreu ali em algum momento 
+        e ele pode ser reparado. <br>
+        Nos dois casos o chkdsk acessa continuamente o bad block para tentar recuperar 
+        todas as informações dali, movendo-as para outro lugar.</p>
+
+    <p>
+        <strong>Mensagem de execução do Chkdsk</strong><br>
+        Chkdsk cannot run because the volume is in use by another
+        process.  Would you like to schedule this volume to be
+        checked the next time the system restarts? (Y/N)
+
+        y
+
+        This volume will be checked the next time the system restarts.
+
+    </p>
+
+
+    <p>
+
+        Tempo de execução desta tarefa varia de alguns minutos a varias horas podendo demorar atá 12HORAS! <br>
+        <strong>  ESTA TAREFA NÃO DEVE SER INTERROMPIDA DE MODO ALGUM! </strong> <br>
+       
+
+        Se não tiver paciencia executar a noite dormir e de manha está terminada.
+
+        CHKDSK (pronounced check disk) is a command that displays a status report for a volume, such as a disk, 
+        and can correct any errors found in that volume. 
+        To use CHKDSK, computers must have the Autochk.exe file already on their system. <br>
+
+        Admins have options for what switches to run with CHKDSK. 
+        For example,  <strong>using /f</strong> tells CHKDSK to fix any errors it finds. <br>
+        Using /r tells CHKDSK to look for and recover any readable information in a disk's bad sectors. <br>
+
+        Several command options for CHKDSK were added in Windows Server 2012. 
+        Administrators can use new commands in PowerShell to run CHKDSK, including repair-volume and scan. <br>
+
+
+        CHKDSK es un comando utilizado en computadoras que funcionan bajo los sistemas operativos 
+        DOS y Microsoft Windows, y es utilizado para comprobar la integridad tanto de unidades 
+        de disco duro como unidades de disco flexible, y para  <strong>reparar errores lógicos</strong> en el sistema de archivos
+
+    </p>
+
+
+
+<h2>3 - SFC /SCANNOW </h2>
+        
+<p>
+    <strong>VERIFICA E REPARA ARQUIVOS PROTEGIDOS DO WINDOWS. </strong> <br>
+    Pode demorar 20 minutos ou mais.
+    
+    “Sfc /scannow” is a command of System File Checker, a utility built in the Windows operating systems. 
+    System File Checker scans critical system files and verify their versions. 
+    If this utility finds any files that has the wrong versions, it replaces them with the correct, verified ones.
+
+</p>
+
+<p>
+   <h4>Se ele não conseguir corrigir automaticamente temos que entrar em:</h4> 
+
+        update & security / Recovery /Restart now <br>
+
+        Depois que reiniciar click em: <br>
+        
+        Trobleshoot / Advanced options / Command Prompt  <br>
+
+        Vai trazer o usuario se necessário vai ter que colocar a senha: <br>
+
+        E abre o CMD. Agora digitamos:<br>
+            BCDEDIT  (enter)<br>
+
+        Vai aparecer a lista de partições onde vc deve localizar onde mostra <br>
+            systemroot mostra \windows <br>
+        E acima dele a letra da partição (NO meu lab) <br>
+            osdevice partition=c: <br>
+        Agora basta digitar o comando substituindo o X pela letra que apareceu: <br>
+            sfc /scannow /offbootdir=X:\ /offwindir=X:\windows <br>
+
+            sfc /scannow /offbootdir=c:\ /offwindir=c:\windows <br>
+
+            sfc /scannow /offbootdir=c:\ /offwindir=c:\windows (usei no lab) <br>
+
+            "Windows Resource Protection did not find any integrity violation <br>
+
+            Começou 5:27 - Terminou 5:30 <br>
+
+            Fecha a janela e clica em: <br> 
+
+            Continue (Exit and continue to Windows 10) <br>
+</p>
+
+
+    4 - <DISM /Online /Cleanup-image /Restorehealth>
+        Repara arquivos corrompidos ou ausentes do windows pode demorar 30 minutos ou mais.
+        Executar como administrador
+        Atenção espaço apenas antes das Barras.
+            (Não funciona windows 7)
+
+        DISM.exe /Online /Cleanup-Image /Restorehealth” 
+        is a Dism command that runs a scan for corruption and repairs problems 
+        that it finds with the operating system you are logged into
+
+        Baboo, tudo bem? Uma dúvida, os comandos SFC e DISM podem ser executados em 
+        Windows Server 2012/2016/2019? Obrigado pelo excelente conteúdo de suas aulas!!! Vale cada centavo investido!
+
+            SIM! Eles podem (e DEVEM) ser executados quando necessário..
+
+
+            O SFC (System File Checker) analisa se os arquivos do sistema operacional estão corrompidos 
+            ou alterados, restaurando a versão correta caso isso aconteça.
+
+            Como nem sempre a restauração via SFC é possível, o DISM (Deployment Image Servicing and Management) 
+            tem procedimentos adicionais para fazer isso..
+
+
+    5 - <Eliminar arquivos temporários>
+            Conforme utiliza seu computador milhares de arquivos temporários são criados. E se não forem apagados
+            de tempos em tempos, disperdiçam muito espaço no disco rígido.
+
+            Principal problema é que podem comprometer seriamente o desempenho do windows por causa da fragmentação.
+
+            Apenas o EXCESSO de arquivos temporários prejudicam o Windows por causa da excessiva fragmentação 
+            que eles criam no HD/SSD. Eu já vi computadores com quase 500 mil arquivos temporários 
+            (pois eles nunca eram apagados, e havia arquivo de cache com mais de 2 anos ali) 
+            que ao serem removidos (e desfragmentados em seguida), o computador ficou em média 3x mais rápido..
+
+            0 - Usar o Disk Cleanup do proprio windows.
+
+
+            CCleaner Portable: https://www.windowsrapidoeseguro.com.br/2
+
+            (CCleaner tem limpeza de registro isso não adinta nada e não influencia no desempenho do windows.)
+            (Não usar programa que dizem que otimizam é uma praga!)
+
+            1. Se você executou um Fresh Start para instalar o Windows "do zero" sem você perder seus arquivos 
+            (conforme eu detalho aqui), 
+            https://www.baboo.com.br/windows-10/dicas-tutoriais-windows/como-utilizar-o-fresh-start-para-remover-bloatwares/
+            a Limpeza de Disco não apagará a pasta Windows.old (que contém os arquivos da versão anterior do Windows). 
+            Para removê-la você deve seguir os passos indicados no artigo.
+            
+            2. Sempre que possível utilize a versão Portable do CCleaner pois essa versão não precisa ser instalada.
+            
+            3. Na minha opinião não existe nenhum motivo para você comprar a versão paga do CCleaner pois as funcionalidades 
+            das versões pagas não deixarão seu Windows mais rápido em relação à versão gratuita
+            
+            4. Embora eu sugiro o uso do CCleaner para remover arquivos temporários (principalmente dos navegadores), 
+            a remoção desses arquivos é algo simples de ser realizado. Por esse motivo utilize esse script que substitui o CCleaner
+            https://www.baboo.com.br/windows-10/conteudo-essencial-windows/script-que-substitui-o-ccleaner/ 
+            que elimina arquivos temporários do Windows, além do Edge, Edge Chromium, Chrome, Firefox, Vivaldi e Brave. 
+            Ali eu também mostro como agendá-lo via Agendador de Tarefas, além de mostrar como criar atalhos 
+            para executá-lo e (eventualmente) desligar/suspender/hibernar o computador após sua finalização. 
+
+
+    5.A <SoftwareDistribution>
+            A eliminação dos arquivos desnecessários do Windows Update é demorada pois muitas atualizações 
+            dependem de outras e o script precisa analisar as versões de centenas ou milhares de arquivos do sistema operacional 
+            antes de apagar aqueles que são desnecessários. 
+            Apagar a pasta <SoftwareDistribution> só deve ser feita quando o Windows Update está com erro 
+            ou quando o sistema operacional não sabe quais atualizações foram baixadas ou não (devido a arquivos corrompidos, por exemplo)..
+
+    <7. Remover Bloarwares, Adware e PUP>
+
+        <PC Decrapifier> 
+
+        O programa PC Decrapifier foi descontinuado pelo autor. Na próxima aula eu abordo o excelente AdwCleanwer 
+        que também remove bloatwares :)
+
+        Artigo do teste da GamersNexus com notebook gamer com bloatwares x sem bloatwares
+        https://www.gamersnexus.net/guides/2580-bloatware-norton-killing-fps-performance-on-1060-laptop-ge62vr
+
+        <AdwCleaner>
+
+        AdwCleaner: https://br.malwarebytes.com/adwcleaner/
+
+        Para bloquear acesso aos principais sites de download, siga as dicas deste artigo e adicione as seguintes linhas no arquivo HOSTS:
+        https://www.baboo.com.br/curso-gratuito-windows-rapido-e-seguro/remocao-de-adwares-e-pup-bloqueio-de-sites-com-arquivo-hosts/
+        Aula 06: Remoção de Adwares e PUP + bloqueio de sites com arquivo hosts (com vídeo)
+
+
+        Pode estar instalado no seu computador sem o seu conhecimento. Pode ser um dos responsáveis pela lentid$ao do windows.
+        BLOATWARE - Programas pré-instalados que vem com os computadores novos não faz ideia pra que serve.
+        Fabricantes de PC fazem isso para aumentar a receita.
+
+
+        The truth is, most Windows PCs start off slower than they should be, clogged with unnecessary preloaded software. 
+        Known as <bloatware> (or a number of less complimentary terms) this software comes in many different forms. 
+        Most bloatware isn't dangerous, but it can slow down your system and take up space on your hard drive.
+
+        How much does bloatware slow down your PC? It's hard to say, but there are some indications 
+        that it can have a considerable effect. 
+        Microsoft sells a line of what it calls Signature PCs, computers that are free of third-party software. 
+        According to the product page, on average, the Signature PCs start up 104% faster, shut down 35% faster 
+        and have 28 minutes more battery life than the same laptops with bloatware.
+
+        <Adware> - Mostra banners e publicidades indesejadas tentando enganar o internauta para cliecar nela 
+
+        <PUP> Programa adicional indesejável que instala juntamente com o programa que vc escolheu instalar 
+            (instala junto sem nosso conhecimento, sites como baizali, superdownloadas usam essa técnica para aumentar receita)
+
+        <Por isso recomendação baixar programa sempre diretamente no site do desenvolvedor.>
+
+
+    8 - <Elimnação TRIPLA de virus e malwares>
+
+        Varredura online sem precisar desinstalar anti-virus. 
+
+        Recomendado como o melhor antivirus gratuito.
+        Kaspersky Security Cloud Free (KSCF): https://www.windowsrapidoeseguro.com.br/5
+
+        Instalação e configuração do KSCF: https://www.baboo.com.br/seguranca-digital/conteudo-essencial-seguranca-digital/kaspersky-security-cloud-free-2021-instalacao-e-configuracao/
+        
+        Recomendado como o melhor antivirus pago.
+        Kaspersky Total Security: https://www.windowsrapidoeseguro.com.br/6
+        
+        Vídeo sobre KSOS 7: https://www.windowsrapidoeseguro.com.br/7
+        
+        Vídeo sobre KESC+: https://www.windowsrapidoeseguro.com.br/8
+
+        <Elimnação /TRIPLA de virus e malwares>
+        
+        TrendMicro HouseCall: https://www.windowsrapidoeseguro.com.br/9
+        
+        KVRT: https://www.windowsrapidoeseguro.com.br/10
+        
+        ESET Online Scanner: https://www.windowsrapidoeseguro.com.br/11
+
+
+    <9 - Instalar bloqueador de propaganda e de url>
+
+        Vantagem do bloqueador de propaganda, além de eliminar os banners dos sites, isso faz com que ele 
+        também bloqueie banners maliciosos. Banners que incluem códigos maliciosos que podem infectar seu computador.
+        podem estar em QUALQUER SITE.
+
+        Estar sempre habilitado, mas criar regras para site que precisamos acessar que não está carregando corretamente.
+
+        Pode ficar mais rapido o carregamento das páginas por que o banner é responsável pela demora do carregamento.
+
+
+
+    
+        Kaspersky Protection: www.windowsrapidoeseguro.com.br/12
+
+        1. Conheça o uBlock Origin AQUI. 
+        
+        https://www.baboo.com.br/seguranca-digital/conteudo-essencial-seguranca-digital/ublock-origin/
+        
+        Eu abordo o uBlock Origin em detalhe (incluindo criação de regras) no meu curso Windows 10: da Formatação à Produtividade.
+        
+        2. Se você quer utilizar uma solução adicional ao <Ublock Origin>, eu sugiro o Malwarebytes Browser Extension 
+        
+        https://chrome.google.com/webstore/detail/malwarebytes-browser-guar/ihcjicgdanjaechkgeegckofjjedodee/
+        
+        que também bloqueia scripts e propagandas, além do <Kaspersky Protection>.
+
+        https://chrome.google.com/webstore/detail/kaspersky-protection-190/amkpcclbbgegoafihnpgomddadjhcadd
+
+        Outra indicada: <TrafficLight>
+
+        Outros dois bons bloqueadores: <windows defender browser protection / malwarebytes browser guard>
+        
+        3. Você pode utilizar mais de um Bloqueador de propagandas no seu navegador sem problema algum: 
+        no máximo o carregamento da página demorará um pouco mais, embora normalmente isso é imperceptível.
+
+
+
+
+        Aurélio, existe alguma ferramenta ou algo nativo do Windows onde consigo controlar regras e portas, 
+        e por qual interface de rede isso pode ou não sair? uma espécie de iptables mas para o Windows 10. 
+        Eu mesmo tenho meu celular fazendo hotspot via USB, mas quero manter a conexão Ethernet para a LAN, 
+        e queria usar o hotspot apenas para navegação web, mas a LAN funcionando, alterando as rotas 
+        no Windows fica custoso pois se eu colocar 0.0.0.0 pro Hotspot, a LAN para funcionar.
+
+
+        O comando netsh advfirewall 
+        
+        http://winintro.ru/netsh_technicalreference.en/html/1a736f2d-ecf8-4780-8e0f-85c4db75230b.htm
+
+        permite você controlar diversas funções relacionadas ao firewall, além do comando NetSecurity via PowerShell.
+
+        https://docs.microsoft.com/en-us/powershell/module/netsecurity/?view=windowsserver2022-ps&viewFallbackFrom=win10-ps
+
+
+
+    <10 - Desfragmentar Disco Rigido e SSD>
+
+    Defraggler: https://www.ccleaner.com/defraggler/download/standard
+
+        Configurar o defraggler:
+
+        Menu Configurações / mapa do dispositivo / visão customizada / largura 12, altura 12 / estilo Plano / Modo Barras
+        Menu Configurações / opções / desfragmentar / mover arquivos grandes para o final do volume / Tamanho 1000
+        Clique na aba Saude e vc saberá se o seu disco rigido ou SSD está com algum parametro errado 
+        Temperatura cor verde e não tiver nenhuma linha vermelha nessa lista isso indica que tudo está OK.
+        Laranja ou vermelho fazer backup e substituir o disco.
+
+        Agora Menu Configurações / Desfragmentação na inicialização / executar uma vez / clique mão.
+
+        Agora botão em baixo Desfragmentar para iniciar o processo. Se aparecer otimizar é por que está usando um SSD.
+        Mesmo assim escolha desfragmentar e click em SIM.
+
+
+        Vídeos sobre Otimização de SSD em português: https://www.youtube.com/playlist?list=PLQfECKnJK6Rypprmz7_mdIVHfRFCQOdIV
+
+        Vídeos sobre Otimização de SSD em inglês: https://www.youtube.com/playlist?list=PLQfECKnJK6RwNa0-iO_bQDFqe6MaHcgcd
+
+        1. Embora exista uma versão paga do Defraggler, não existe nenhum motivo para você comprá-la 
+        pois a versão paga não oferece nenhum benefício de ganho de desempenho em relação à versão gratuita.
+
+        2. Quando você desfragmenta do disco rígido ou SSD e após a desfragmentação existem 
+        mais fragmentos do que antes(!), isso indica que a tabela FAT (File Allocation Table) certamente está corrompida. 
+        Para resolver isso, execute o chkdsk /r indicado na Aula 02. Mais informações sobre chkdsk/r aqui.
+
+        3. Se você quer utilizar um desfragmentador pago, eu sugiro o ótimo PerfectDisk Pro
+
+
+        Desfragmentadores diferentes usam algoritmos diferentes para definir se um arquivo está fragmentado ou não. 
+        O Defraggler utiliza o algoritmo do próprio Windows, enquanto o PerfectDisk utiliza algoritmos próprios, 
+        e por isso podem haver diferenças.
+
+        O metadados citado ali é o metadados do sistema de arquivos NTFS que são diversos 
+        arquivos "intocáveis" que contêm todas as informações e atribuições dos arquivos 
+        existentes na partição. Nesse caso você deve executar a desfragmentação offline (Boot Time Defrag).
+
+
+        O resultado depende diretamente do uso do computador. Se você está com o Outlook aberto, por exemplo, 
+        o desfragmentador não consegue acessar o arquivo .pst dele (que pode ficar bastante fragmentado com o tempo) 
+        - algo que ele pode fazer se o programa não estiver em uso..
+
+        Eu sugiro fazer isso SE isso não gerar problemas, pois muitas vezes isso pode causar problemas na aplicação. 
+        No caso do MySQL existem várias ferramentas excelentes que ajudam a otimizá-lo e economizar espaço, 
+        como o Monyog, os produtos da Percona, o MySQL Tuner (simples e muito eficiente), entre outros. 
+
+        Como meu site e fórum funcionavam com MySQL, eu aprendi MUITO a otimizar o banco de dados seguindo 
+        a análise e sugestão desses programas :)
+        ----
+
+        Baboo hoje mesmo desfragmentei o hd do notebook do meu pai e após 9 horas e meia o processo terminou. 
+        Observei que a saúde do disco estava boa e configurei o Defraggler da maneira ensinada por você. 
+        A porcentagem da fragmentação era de 20% e após o término passou a ser 13%. 
+        Curiosamente o notebook voltou a funcionar perfeitamente. 
+        Esses valores são normais? As porcentagens e o tempo que levou? 
+        Existe alguma porcentagem tolerável onde posso ignorar a desfragmentação?
+
+        Sim, esses valores são normais pois dependem muito de quais arquivos estão fragmentados 
+        e qual é o tamanho deles. Raramente é possível obter 0% de fragmentação na partição aonde o Windows está instalado :)
+        ----
+        Meu SSD indicava 88% de fragmentado, porém apos a desfragmentação continuou nos mesmos 88%, o que pode ter de errado em meu disco?
+        Isso é comum quando a tabela FAT (File Allocation Table) ou o disco tem algum problema. Execute o chkdsk /r.
+
+        ----
+        Baboo Não seria ideal deixar configurado para o defragger desfragmentar os arquivos 
+        que o windows não deixa toda vez que inicia? ou Somente fazer esse processo de 15 em 15 dias?
+        A cada 15 dias.. a desfragmentação diária não é necessária
+
+    <11 - Corrigir e executar Windows Update>
+
+        Aplicativo da Microsoft para Solução de problemas do Windows Update: http://windowsrapidoeseguro.com.br/16
+
+
+
+        A dias estava tendo problemas com as atualizações do windows update... após baixar e instalar a solução de problemas do WU, tive a desagradável mensagem: " service registration is missing or corrupt (x)"
+
+
+                    Inicialmente abra um Prompt de Comando (Admin) e execute essas linhas:
+
+                    net stop wuauserv
+                    net stop cryptSvc
+                    net stop bits
+                    net stop msiserver
+                    ren C:\Windows\SoftwareDistribution SoftwareDistribution.old
+                    ren C:\Windows\System32\catroot2 catroot2.old
+                    net start wuauserv
+                    net start cryptSvc
+                    net start bits
+                    net start msiserver
+
+                    Execute o Windows Update novamente..
+    
+     - <Windows update>
+
+    Baboo quais são os outros comandos que posso executar para fazer o reparo 
+    de uma atualização que deu defeito ou quando corro pé alguma arquivo de volta do Windows?
+
+    Basta abrir um Prompt de Comando (Admin) e digitar 
+    wusa /uninstall /kb:1234567 /quiet 
+    para desinstalar a atualização KB1234567, substituindo o número dela pelo número correto..
+
+        
+
+
+
+
+
+
+
+
+
+
+    
+</body>
+</html>
+
