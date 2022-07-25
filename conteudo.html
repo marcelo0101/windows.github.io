@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>PowerShell</title>
+</head>
+<body>
+
+    <h1>PowerShell</h1>
+
+    <p>
+        <h2>O qué PowerShell?</h2>
+        <ul>
+
+            <li>  Com PowerShell se pode criar scripts sem que seja archivos de lote (antigo .BAT) </li>
+            <li> Comparte estrutura de PERL uma linguagem de alto nivel. </li>
+            <li> Requer Microsoft .NET framework</li>
+            <li> Desde 2016 Micrsoft publicou em Github o código para se integrar com os sistemas GNU/Linux e MAC OSX</li>
+            <li> Temos varios comando ou ordens qye são chamados  <strong>cmdlets</strong></li>
+
+        </ul>
+
+        <h2>Como executar PowerShell?</h2>
+        <ul>
+
+            <li> Interface de comandos PowerShell </li>
+            <li> Windows PowerShell ISE (seria como uma IDE para programar em PowerShell)</li>
+            <li> Execução de archivos .ps1</li>
+   
+        </ul>
+
+        <h2>Estrutura de comandos</h2>
+        <ul>
+
+            <li> Os nomes de todos os <strong>cmdlets</strong> seguem um padrão comum, formado por um verbo um traço e um nome singular (ex.: Get-Help)</li>
+            <li> Windows PowerShell não distingue entra maiúscula e minuscula, recomendação seguir o padrão</li>
+            <li> Se usamos ISE ambiente de desenvolvimento podemos ter a ajuda do autocompletar</li>
+            <li> Argumentos e Operandos - ex.: <strong> cp -R origem destino </strong>  (-R argumento para modificar o comportamento padrão deste comando
+                e copiar de forma recursiva ou seja todos as subpastas e arquivos e para copiar precisamos informar a origem e destino)</li>
+            <li> Opcionais e Obrigatórios</li>
+   
+        </ul>
+
+
+        
+        <h2>Atenção com os escripts</h2>
+        <ul>
+
+            <li> Segurança na execução de scripts</li>
+            <li> Devido a ser um recurso muito potente deve ser controlado (pode criar varias coisas inclusive criar politica e usuarios no AD </li>
+            <li> Usuarios sem experiência </li>
+            
+   
+        </ul>
+
+        <h2>Quatro niveis de Permissão</h2>
+        <ul>
+
+            <li> <strong>Restricted:</strong> Neste nivel não se permite a execução de scripts, apenas em modo interativo, esta é a opção predeterminada </li>
+            <li> <strong>AllSigned:</strong> Neste opção os scripts precisam estar autenticados, antes de poder executar. É a opção mais restritiva </li>
+            <li> <strong>RemoteSigned:</strong> Neste caso precisam estar autenticados scripts de um local remoto, por exemplos os que baixamos.</li>
+            <li><strong>Unrestricted: </strong> Se esta opção estiver selecionada vai executar qualquer script de qualquer origem. Se trata da opção menos recomendada.</li>
+            
+   
+        </ul>
+       
+
+        <hr>
+
+        <h2>Comandos</h2>
+
+ 
+
+        <p>
+            <strong>Get-Command</strong><br>
+            Get-Command -CommandType cmdlet | Measure-Object  <br>
+    
+            <pre>
+                Numero de comando atual que podemos usar no PowerShell. 
+
+                Count    : 693
+                Average  : 
+                Sum      : 
+                Maximum  : 
+                Minimum  : 
+                Property : 
+    
+            </pre>
+
+        </p>
+
+        <hr>
+
+        <p>
+            <strong>DIR no PowerShell é Get-ChildItem</strong>
+        </p>
+
+        <hr>
+
+        <p>
+            <strong>Get-Help </strong> <br>
+            Comando pata pedir ajuda para outro comando por exemplo: <br>
+            <strong> Get-Help Get-ChildItem</strong> <br>
+
+            Se necessitamos ajuda on´line com exemplos podemos usar: <br>
+             <strong>Get-help -Online Get-ChildItem</strong>
+        
+        </p>
+
+        <hr>
+
+        <p>
+           Podemos baixar o arquivo de ajuda On-line se for necessário <br>
+            <strong>Update-Help -Module Microsoft.PowerShell*</strong> <br>
+
+            Se agora solicitamos ajuda de Get-ChildItem será mais completa <br>
+            <strong>Get-Help Get-ChildItem -Detailed</strong> <br>
+            Com isso atualizamos a ajuda local com o que temos de mais recente na internet <br>
+
+            Podemos solicitar exemplo: <br>
+            <strong>Get-Help Get-ChildItem -Examples </strong> <br>
+            Se queremos informação detalhada de cada argumento do comando: <br>
+            <strong>Get-Help Get-ChildItem -Full</strong>
+
+        </p>
+
+
+        <hr>
+
+        <p>
+            Saber que tipo de politica temos altualmente das quatro opções que vimos. <br>
+            <strong>Get-ExecutionPolicy</strong> <br>
+            <br>
+            Para mudar a politica, sempre executamos PowerShell como administrador <br>
+            <strong>Set-ExecutionPolicy RemoteSigned</strong> <br>
+            <br>
+            Precisamos executar PowerShell como administrador para mudar a configuração.
+
+            <pre>
+                PS C:\Windows\system32> Set-ExecutionPolicy RemoteSigned
+
+                Execution Policy Change
+                The execution policy helps protect you from scripts that you do not trust. Changing the execution policy might expose
+                you to the security risks described in the about_Execution_Policies help topic at
+                https:/go.microsoft.com/fwlink/?LinkID=135170. Do you want to change the execution policy?
+                [Y] Yes  [A] Yes to All  [N] No  [L] No to All  [S] Suspend  [?] Help (default is "N"): y
+                PS C:\Windows\system32> Get-ExecutionPolicy
+                RemoteSigned
+            </pre>
+
+        </p>
+
+        <hr>
+
+        <h2>Primeiro Script</h2>
+
+        <p>
+            Guardaremos o arquivo com a extensão -ps1 <br>
+
+            Write-Host "Hola Amigos!!"
+            Write-Host "Isto é um script PowerShell"
+            pause
+
+            <pre>
+                PS C:\> cd jss
+                PS C:\jss> .\primeiroScript.ps1
+                Hola Amigos!!
+                Isto é um script PowerShell
+                PS C:\jss> ./primeiroScript.ps1
+                Hola Amigos!!
+                Isto é um script PowerShell
+
+                PS C:\jss> ./primeiroScript.ps1
+                Hola Amigos!!
+                Isto é um script PowerShell
+                Press Enter to continue...: (adicionai a pause)
+
+
+            </pre>
+
+            <h4>Caminho para abrir os scripts com PowerShell ISE</h4>
+            C:\Windows\System32\WindowsPowerShell\v1.0\powershell_ise <br>
+
+
+        </p>
+
+<hr>
+        <h2>Varáveis</h2>
+
+        <h2>Conceito de Variável</h2>
+        <ul>
+
+            <li> Zona de memoria RAM com um Nome para poder fazer referencia em nosso programa, que o SO reserva, por que outros programas estão usando a mesma memoria RAM.</li>
+            <li> Nesta zona ou espaço de memoria podemos escrever e ler </li>
+            <li> Memoria reservada para nosso programa ou Scripts</li>
+            <li>Proteção SO, assim nenhum outro programa pode alterar nossa variavel, o que está reservado nunhum outro programa pode acessar.</li>
+            <li>Nomes Únicos e Inalterados</li>
+            
+   
+        </ul>
+
+<hr>
+
+        <h2>Conceito de Variável Sintax</h2>
+        <ul>
+
+            <li> O primeiro caracter deve ser um simbolo de dólar ($)</li>
+            <li> Depois podemos utilizar qualquer combinação de letras, números ou simbolos </li>
+            <li> Pode-se usar espaço em branco mas neste caso o nome precisa estar entre simbolos de chaves {} Totalmente não recomendado
+                se desejar colocar mais de um nome podemos usar underline teste_2
+            </li>
+            <li> Recomendado nome de variável conciso, curto e autoexplicável</li>
+            <li> Primeira variável: <strong>$nome = "João Jorge"</strong> </li>
+            <li>Operador de atribuição = a variável <strong>$nome</strong>  neste caso vai conter o que está a direita do sinal de igual. </li>
+            <li>O valor de caracteres  tem que estar fechado entre aspas</li>
+            <li>boa partica usar nome de variavel sempre em minuscula</li>
+            <li> <strong>Modelo Implicito de criar variável</strong> </li>
+<hr>
+            <li><strong>Modo explicito mais formal</strong> </li>
+            <li>Usando o cmdlet New-Variable (New-Variable $nome)</li>
+            <li>Ou também (New-Variable -Name $nome)</li>
+            <li>Com valor (New-Variable -Name $nome -Value "João Jorge" </li>
+                  
+
+        </ul>
+
+        <h2>Constantes</h2>
+
+        <ul>
+            <li>As constantes são variáveis que não mudam o valor no tempo de execução</li>
+            <li>Si tentamos mudar vai aparecer uma mensagem de erro</li>
+            <li> Exemplo explicito: New-Variable -Name $nome -Value "José Jorge" -Option ReadOnly  (Podemos usar para IVA, PI etc)  
+                Zona de memoria que o valor não vai ser alterado na execução do nosso script ou programa.
+            </li>
+
+            <hr>
+
+            <li>Saber todas as vairaveis que temos definidas (<strong>Get-Variable</strong>)</li>
+            
+        </ul>
+
+        <pre>
+            Temos aqui uma lista de variáveis que não criamos  que já estão criadas no  ambiente 
+            Temos duas colunas NAME e VALOR 
+            Exemplo a variável HOME tem o valor C:\Users\MFJCode Lab
+            Exemplo a variável PSHOME onde temos powershell instalado C:\Windows\System32\WindowsPowerShell\v1.0
+
+            PS C:\Users\MFJCode Lab> Get-Variable
+
+                    Name                           Value
+                    ----                           -----
+                    $                              get-Variable
+                    ?                              True
+                    ^                              get-Variable
+                    args                           {}
+                    ConfirmPreference              High
+                    ConsoleFileName
+                    DebugPreference                SilentlyContinue
+                    Error                          {}
+                    ErrorActionPreference          Continue
+                    ErrorView                      NormalView
+                    ExecutionContext               System.Management.Automation.EngineIntrinsics
+                    false                          False
+                    FormatEnumerationLimit         4
+                    HOME                           C:\Users\MFJCode Lab
+                    Host                           System.Management.Automation.Internal.Host.InternalHost
+                    InformationPreference          SilentlyContinue
+                    input                          System.Collections.ArrayList+ArrayListEnumeratorSimple
+                    MaximumAliasCount              4096
+                    MaximumDriveCount              4096
+                    MaximumErrorCount              256
+                    MaximumFunctionCount           4096
+                    MaximumHistoryCount            4096
+                    MaximumVariableCount           4096
+                    MyInvocation                   System.Management.Automation.InvocationInfo
+                    NestedPromptLevel              0
+                    null
+                    OutputEncoding                 System.Text.ASCIIEncoding
+                    PID                            11908
+                    PROFILE                        C:\Users\MFJCode Lab\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+                    ProgressPreference             Continue
+                    PSBoundParameters              {}
+                    PSCommandPath
+                    PSCulture                      en-US
+                    PSDefaultParameterValues       {}
+                    PSEdition                      Desktop
+                    PSEmailServer
+                    PSHOME                         C:\Windows\System32\WindowsPowerShell\v1.0
+                    PSScriptRoot
+                    PSSessionApplicationName       wsman
+                    PSSessionConfigurationName     http://schemas.microsoft.com/powershell/Microsoft.PowerShell
+                    PSSessionOption                System.Management.Automation.Remoting.PSSessionOption
+                    PSUICulture                    en-US
+                    PSVersionTable                 {PSVersion, PSEdition, PSCompatibleVersions, BuildVersion...}
+                    PWD                            C:\Users\MFJCode Lab
+                    ShellId                        Microsoft.PowerShell
+                    StackTrace
+                    true                           True
+                    VerbosePreference              SilentlyContinue
+                    WarningPreference              Continue
+                    WhatIfPreference               False
+
+        </pre>
+ 
+        <hr>
+
+        <h2>Obter valores do Usuario</h2>
+
+        <ul>
+            <li>Solicitar os valores que precisamos para o Usuario</li>
+            <li>$nome = Read-host "Como você se chama?" </li>
+            <li> Se guardará como String </li>
+            <li>Não é usado em scripts autoexecutáveis por que vai ficar parado nesta linha até o usuario introduzir a informação solicitada</li>
+
+            <hr>
+
+            <li>Saber todas as vairaveis que temos definidas (<strong>Get-Variable</strong>)</li>
+            
+        </ul>
+
+        <hr>
+
+        <h2>Imprimir na Tela a informação digitada pelo Usuario</h2>
+
+        <ul>
+            <li>Vamos usar para imprimir os valores estáticos ou variáveis</li>
+
+            <pre>
+              $nome = Read-host "Como você se chama?"
+              Write-Host "Hola" 
+              Write-Host $nome
+
+              PS C:\Users\MFJCode Lab> $nome = Read-host "Como você se chama?"
+                Write-Host "Hola" 
+                Write-Host $nome
+                Como você se chama?: Jorge
+                Hola
+                Jorge
+            </pre>
+        
+            <li>Cada instrucción en líne nueva</li>
+            <li>Pratica com a entrada e saida de informação</li>
+
+    
+            
+        </ul>
+
+        <hr>
+
+        <h2>A memória RAM é que Manda</h2>
+
+        <ul>
+            <li>Recurso Limitado </li>        
+            <li>Proteção - SO tem que proteger a area reservada para não ser usada por outro programa</li>
+            <li>Ajuste Fixo ou ajuste dinâmico  -  Tem variavel que vai ocupar um valor fixo e tem varável que vai ocupar um valor dinâmico dependendo do valor</li>
+            <li>Tamanho da Reserva</li>
+    
+            
+        </ul>
+    
+
+        <hr>
+
+        <h2>Tipos de Dados</h2>
+
+        <ul>
+            <li>STRING - Sequencia de caracteres</li>        
+            <li>CHAR - apenas um caracter - Unicode</li>
+            <li>INT - Inteiro de 32 bits: -2147483648 a 2147483647</li>
+            <li>LONG - Inteiro de 64 bites </li>
+            <li>SINGLE - Número Flutuante Decimais de 32 bits</li>
+            <li>DOUBLE - Número Flutuante Decimais de 64 bits</li>
+            <li>DATETIME - Data e hora: 1 de Janeiro 100 até 31 dezembro 9999</li>  
+            <li>BOOL - Valor lógico True ou False</li>  
+            <li>ARRAY - Conjunto de valores (Por exemplo armazenar as notas de 30 alunos, não vamos criar para cada aluno uma variavel.
+                Criamos um array notas com todas as notas.
+            </li>
+            <li>HASHTABLE - Objeto que representa uma tabela HASH</li>
+            
+        </ul>
+
+        <hr>
+
+        <h2>Obter o tipo da Variável</h2>
+
+        <ul>
+            <li>Uma vez definida uma variável e dados um valor sabver que tipo é:</li>  
+            
+            <pre>
+                $nome = "Jorge Rico"
+                Write-Host $nome.GetType().name 
+
+                PS C:\Users\MFJCode Lab> $nome = "Jorge Rico"
+                Write-Host $nome.GetType().name 
+
+                String      <strong>(Converteu automaticamente em string por que não foi explicito)</strong>
+                
+            </pre>
+            <li>Orientação a objeto</li>
+            <li>Linguagem de Alto Nível</li>
+
+            <hr>
+            <li><strong>Implicita</strong> : o tipo de dado se designa automaticamente segundo o valor que foi dado</li>
+            <pre>
+                $nome = "Fulano Leite"
+                (A variavel $nome de designa o tipo String)
+
+                $precio = 4.99
+                (A variavel $nome de designa o tipo double)
+
+                Exemplo:
+                $nome = "Fulano Leite"
+                $precio = 4.99
+
+                Write-Host $nome.GetType().Name
+                Write-Host $precio.GetType().Name
+
+                Saida:
+
+                PS C:\Users\MFJCode Lab>                 
+                $nome = "Fulano Leite"
+                $precio = 4.99
+
+                Write-Host $nome.GetType().Name
+                Write-Host $precio.GetType().Name
+
+                String
+                Double
+            </pre>
+            <li>Assim na definição Implicita o valor pode mudar na execução</li>
+
+            <pre>
+                $nome = "Fulano"
+                Write-Host $nome.GetType().Name
+
+                $nome = 4.99
+                Write-Host $nome.GetType().Name
+
+                saida:
+
+                PS C:\Users\MFJCode Lab>                 
+                $nome = "Fulano"
+                Write-Host $nome.GetType().Name
+
+                $nome = 4.99
+                Write-Host $nome.GetType().Name
+
+                    String
+                    Double
+
+            </pre>
+
+
+            <hr>
+            <li><strong>Explicito:</strong>  Definimos o tipo de dado na hora de definir a variável quando damos o valor, e se ajustará ao tipo estabelecido</li>
+            <pre>
+                    Definiçõ
+
+
+
+            </pre>
+            
+        </ul>
+    
+</body>
+</html>
