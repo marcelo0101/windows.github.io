@@ -236,6 +236,30 @@
                 Zona de memoria que o valor não vai ser alterado na execução do nosso script ou programa.
             </li>
 
+            <pre>
+                Constante definida com valor 
+
+               <strong>New-Variable nome -Option ReadOnly -value 100 </strong> 
+
+               Se tentamos mudar para pepe 
+
+               $nome = "pepe"
+
+               SAIDA ERROR:
+
+               PS C:\Users\MFJCode Lab>
+               New-Variable nome -Option ReadOnly -value 100
+               $nome = "pepe"
+
+                Cannot overwrite variable nome because it is read-only or constant.
+                At line:3 char:16
+                +                $nome = "pepe"
+                +                ~~~~~~~~~~~~~~
+                    + CategoryInfo          : WriteError: (nome:String) [], SessionStateUnauthorizedAccessException
+                    + FullyQualifiedErrorId : VariableNotWritable
+
+            </pre>
+
             <hr>
 
             <li>Saber todas as vairaveis que temos definidas (<strong>Get-Variable</strong>)</li>
@@ -455,15 +479,290 @@
 
 
             <hr>
-            <li><strong>Explicito:</strong>  Definimos o tipo de dado na hora de definir a variável quando damos o valor, e se ajustará ao tipo estabelecido</li>
+            <li><strong>Explicito:</strong>  Definimos o tipo de dado na hora de definir a variável quando damos o valor, e se ajustará ao 
+                tipo estabelecido</li>
             <pre>
-                    Definiçõ
+                   <strong>Definição explícita</strong>
+                   $temperatura = 4.99 
+                   Em modo implicito será <strong>double</strong>  (64 bits) (Vai ocupar um espaço de RAM muito grande sem necessidade)
 
-
+                   Mas vamos declarar de modo explicito para ser uma float (32 bits) <br>
+                   [float] $temperatura = 4.99 <br>
+                   Agora dependerá da natureza dos dados guardados
 
             </pre>
-            
+
+            <li>Quando uma variável tem um tipo definido e informamos um tipo de dados diferente vai saltar msg de ERRO</li>
+            <pre>
+
+                [float] $temperatura = 4.99
+                $temperatura = "Agora que mudar para Caracter"
+
+                SAIDA ERROR:
+
+                PS C:\Users\MFJCode Lab>                 
+                [float] $temperatura = 4.99
+                $temperatura = "Agora que mudar para Caracter"
+                Cannot convert value "Agora que mudar para Caracter" to type "System.Single". Error: "Input string was not in a correct format."
+                At line:2 char:17
+                +                 $temperatura = "Agora que mudar para Caracter"
+                +                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    + CategoryInfo          : MetadataError: (:) [], ArgumentTransformationMetadataException
+                    + FullyQualifiedErrorId : RuntimeException
+
+
+                <strong>Outro exemplo de Tipos</strong> 
+
+                [int] $temperatura = 4.99
+                write-Host $temperatura
+
+                SAIDA (Como tipo inteiro não aceita casas decimais o valor foi arredondado)
+
+                
+                    PS C:\Users\MFJCode Lab>
+                    [int] $temperatura = 4.99
+                    write-Host $temperatura
+                    5
+                
+            </pre>                      
         </ul>
+
+        <br>
+
+        <h2>Casting, especificar tipo de dado</h2>
+
+        <ul>
+            <li>Casting - In type casting, the compiler automatically changes one data type to another 
+                one depending on what we want the program to do. </li>
+
+        </ul>
+
+        <pre>
+            Se não especificarmos o tipo de dado neste caso abaixo vai ser armazenado como String 
+
+            $data = "3/11/2022"
+            White-Host $data
+
+            Já neste caso vamos fazer um <strong>casting</strong>  (E NESTE CASO É POSSIVEL POR QUE É UMA sTRING QUE REPRESENTA UMA DATA )
+            e agora será do tipo date.
+
+            $data = [datetime] "3/11/2022"
+            White-Host $data
+
+            SAIDA:
+
+            PS C:\Users\MFJCode Lab>             
+            $data = "3/11/2022"
+            Write-Host $data
+            Write-Host $data.GetType().Name
+            
+            $data = [datetime] "3/11/2022"
+            Write-Host $data
+            Write-Host $data.GetType().Name
+
+                        3/11/2022
+                        String
+                        3/11/2022 12:00:00 AM
+                        DateTime
+
+        </pre>
+<hr>
+
+<h2>Espaço ocupado em memória</h2>
+
+<ul>
+    <li>Depende do tipo de Variável</li>
+    <li><strong>Longitude fixa: </strong> O tamanho da varivel na memoria não mudara, a menos que mude o dado armazenado.
+        Neste grupo temos a maioria dos tipos de dados básicos: <strong>char, byte, int, long, single, double, decimal, datetime y bool.</strong> 
+    </li>
+
+    <li><strong>Longitude variável:</strong> Neste caso o tamanho da variável se ajusta ao valor que estamos atribuindo. Neste 
+    grupo se encontram: <strong>string, array, hashtable e xml</strong> </li>
+</ul>
+
+<hr>
+
+<h2>Operadores Aritiméticos</h2>
+
+<h3>Necessidade de Operadores</h3>
+
+<ul>
+    <li>Operadores usados para transformar a informação temos a entrada, calculo e a saida</li>
+    <li>Operam entre variáveis e valores fixos</li>
+    <li>Devolve um valor calculado</li>
+    <li>Se pode concatenar valores (com uma ordem de execução)</li>
+    <li>Funcionamento dependerá do tipo de variável.</li>
+
+</ul>
+
+<hr>
+
+<h2>Tipos básico de Operadores</h2>
+
+
+<ul>
+<li>Operadores Aritméticos</li>
+<li>Operadores Lógicos</li>
+<li>Operadores de Comparação</li>
+
+</ul>
+
+<hr>
+
+<h2>Operador de Atribuição</h2>
+
+<ul>
+<li>Modifica o valor de uma variável</li>
+<li>Pode modificar também o tipo de não está estabelecido</li>
+<li>Funciona da direita para esquerda</li>
+<li>O que atribui é o valor</li>
+<li>Não confundir com == (esse é para comparar valores)</li>
+
+</ul>
+
+<pre>
+    $nome_a = "Fulado de Tal"
+    $nome_b = $nome_a
+    $nome_a = "Ciclano de Tal"
+
+    Write-Host $nome_a
+    Write-Host $nome_b
+
+    Que valores serão impressos?
+
+    PS C:\Users\MFJCode Lab>     $nome_a = "Fulado de Tal"
+    $nome_b = $nome_a
+    $nome_a = "Ciclano de Tal"
+
+    Write-Host $nome_a
+    Write-Host $nome_b
+
+
+        Ciclano de Tal
+        Fulado de Tal
+
+
+</pre>
+
+<hr>
+
+<h2>Operadores Aritméticos</h2>
+
+<ul>
+<li>Operador de Soma +</li>
+    <pre>
+        - Depende do tipo da variável vai atuar de uma forma ou outra
+        - Não é o mesmo somar numeros ou cadeias de caracteres
+
+        Exemplo:
+
+        Write-Host (5+6) - Aqui apenas imprime o resultado mas não guarda na memoria
+        $soma = 5 + 6 - Aqui estamos guardando o valor da soma na memoria
+        Write-Host $soma - E agora estamos imprimindo
+
+        -Soma os valores e devolve o resultado da Soma
+        - Funcionamento bem claro mas cuidado com os tipos de variáveis 
+        - Funciona com valores estáticos ou variáveis
+
+        White-Host (5+6) - valor estatico
+
+        $n = 5
+        $m = 6
+
+        $suma = $n + $m - Valor variável 
+        Write-Host $suma
+
+        SAIDA:
+
+        PS C:\Users\MFJCode 
+        
+        Lab> Write-Host (5+6)
+
+        $n = 5
+        $m = 6
+
+        $suma = $n + $m 
+        Write-Host $suma
+
+                11
+                11
+
+
+        <strong>OPERADOR SOMA + COM STRING </strong> 
+
+        <strong>Concatena</strong>  as cadeias de caracteres e devolve uma cadeia com a soma das duas.
+
+        $first_name = "Ben vindo!"
+        $last_name = " Fulano de Tal"
+        $full_name = $first_name + $last_name
+        Write-Host $full_name
+
+        SAIDA 
+
+        PS C:\Users\MFJCode Lab>         
+        $first_name = "Bem vindo!"
+        $last_name = " Fulano de Tal"
+        $full_name = $first_name + $last_name (tbm pode se colocar $first_name + " " + $last_name )
+        Write-Host $full_name
+        Bem vindo! Fulano de Tal
+
+    </pre>
+
+    <hr>
+
+<li>Operador de subtração - </li>
+
+<pre>
+    Subtrai o valor da primeira variável e o valor da segunda varável e devolve o resultado.
+
+    Write-Host (6-5)
+    $n = 6
+    $m = 5 
+
+    $subtrai = $n - $m 
+    Write-Host $subtrai
+
+    SAIDA
+
+    PS C:\Users\MFJCode Lab>     Write-Host (6-5)
+    $n = 6
+    $m = 5 
+
+    $subtrai = $n - $m 
+    Write-Host $subtrai
+        1
+        1
+
+</pre>
+
+<hr>
+
+<li>Operador de Multiplicação * </li>
+
+<pre>
+    Multiplica o valor dos operandos e devolve o resultado
+
+
+
+</pre>
+
+
+<li>Operador de Divisão / </li>
+
+<hr>
+
+<li>Operador resto % </li>
+
+<pre>
+
+
+
+</pre>
+
+<li>Operador += </li>
+<li>Operador ++ </li>
+
+</ul>
     
 </body>
 </html>
